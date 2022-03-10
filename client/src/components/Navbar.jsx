@@ -24,7 +24,17 @@ const Navbar = () => {
           Login
         </li>
       </ul>
-      
+      <div className="flex relative">
+        {!toggleMenu && (
+          <HiMenuAlt4 fontSize={28} className="text-white md:hidden cursor-pointer" onClick={() => setToggleMenu(true)} />
+        )}
+        {toggleMenu && (
+          <AiOutlineClose fontSize={28} className="text-white md:hidden cursor-pointer" onClick={() => setToggleMenu(false)} />
+        )}
+        
+          </ul>
+        )}
+      </div>
     </nav>
   );
 };
