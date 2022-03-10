@@ -1,6 +1,8 @@
 import React from "react";
 import { HiMenuAlt4 } from "react-icons/hi";
-import { AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose } from "react-icons/ai"
+
+import { motion } from "framer-motion";
 
 import logo from "../images/logo.png";
 
@@ -32,15 +34,17 @@ const Navbar = () => {
           <AiOutlineClose fontSize={28} className="text-white md:hidden cursor-pointer" onClick={() => setToggleMenu(false)} />
         )}
         {toggleMenu && (
-          <ul
-            className="z-10 fixed -top-0 -right-2 p-3 w-[70vw] h-screen shadow-2xl md:hidden list-none
-            flex flex-col justify-start items-end rounded-md blue-glassmorphism text-white animate-slide-in"
+          <motion.ul
+          whileInView={{ x: [300, 0] }}
+            transition={{ duration: 0.85, ease: "easeIn" }}
+            className="z-10 fixed top-0 -right-2 p-3 w-[70vw] h-screen shadow-2xl md:hidden list-none
+            flex flex-col justify-start items-end rounded-md blue-glassmorphism text-white"
           >
             <li className="text-xl w-full my-2"><AiOutlineClose onClick={() => setToggleMenu(false)} /></li>
             {["Market", "Exchange", "Tutorials", "Wallets"].map(
               (item, index) => <NavBarItem key={item + index} title={item} classprops="my-2 text-lg" />,
             )}
-          </ul>
+          </motion.ul>
         )}
       </div>
     </nav>
