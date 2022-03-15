@@ -15,11 +15,12 @@ const getEthereumContract = () => {
     contractABI,
     signer
   );
-    return transactionContract;
-}
+  return transactionContract;
+};
 
 export const TransactionProvider = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState("");
+  const [isLoading, setIsLoading] = useState(false)
   const [formData, setFormData] = useState({
     addressTo: "",
     amount: "",
@@ -65,18 +66,31 @@ export const TransactionProvider = ({ children }) => {
   const sendTransaction = async () => {
     try {
       if (!ethereum) return alert("Please install Metamask");
-      const {addressTo, amount, keyword, message} = formData;
+      const { addressTo, amount, keyword, message } = formData;
       const transactionContract = getEthereumContract();
+      const parsedAmount = ethers.utils.parseEther(amount);
 
-        await ethereum.request({
-            method: 'eth_sendTransaction',
-            params: [{
-                from: currentAccount,
-                to: addressTo,
-                gas: '0x5208',
-                value : amount
-            }] 
-        })
+      await ethereum.request({
+        method: "eth_sendTransaction",
+        params: [
+          {
+            from: currentAccount,
+            to: addressTo,
+            gas: "0x5208",
+            value: parsedAmount._hex,
+          },
+        ],
+      });
+
+      const transactionHash = await transactionContract.addToBlockchain(
+        addressTo,
+        parsedAmount,
+        message,
+        keyword
+      );
+
+      isLoading(true)
+      console.log(`Loading - ${transactionHash.hash}`);
 
     } catch (error) {
       console.log(error);
@@ -96,7 +110,7 @@ export const TransactionProvider = ({ children }) => {
         formData,
         setFormData,
         handleChange,
-        sendTransaction
+        sendTransaction,
       }}
     >
       {children}
