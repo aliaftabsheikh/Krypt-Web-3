@@ -88,6 +88,7 @@ export const TransactionProvider = ({ children }) => {
         formData,
         setFormData,
         handleChange,
+        sendTransaction
       }}
     >
       {children}
