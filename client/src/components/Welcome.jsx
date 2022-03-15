@@ -1,7 +1,9 @@
-import React from "react";
+import React,{useContext} from "react";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { SiEthereum } from "react-icons/si";
 import { BsInfoCircle } from "react-icons/bs";
+
+import { TransactionsContext } from "../context/TransactionsContext";
 
 import { Loader } from "./";
 
@@ -19,6 +21,8 @@ const Input = ({placeholder, name, type, value, handleChange})=>(
 
 
 const Welcome = () => {
+  const {value} = useContext(TransactionsContext);
+  console.log(value);
   const connectWallet = () => {
 
   };
@@ -49,7 +53,7 @@ const Welcome = () => {
           <div className="grid sm:grid-cols-3 grid-cols-2 w-full mt-10">
             <div className={`rounded-tl-2xl ${commonStyles}`}>Binance</div>
             <div className={commonStyles}>CoinMarketCap</div>
-            <div className={`rounded-tr-2xl${commonStyles}`}>Reliability</div>
+            <div className={`rounded-tr-2xl ${commonStyles}`}>Reliability</div>
             <div className={`rounded-bl-2xl ${commonStyles}`}>Web 3.0</div>
             <div className={commonStyles}>Low fees</div>
             <div className={`rounded-br-2xl ${commonStyles}`}>Blockchain</div>
