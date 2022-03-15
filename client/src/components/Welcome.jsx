@@ -21,7 +21,7 @@ const Input = ({placeholder, name, type, value, handleChange})=>(
 
 
 const Welcome = () => {
-  const {connectWallet} = useContext(TransactionsContext);
+  const {connectWallet, currentAccount} = useContext(TransactionsContext);
 
   const handleSubmit = ()=>{
 
@@ -38,6 +38,7 @@ const Welcome = () => {
             Explore the Crypto World. Buy and sell cryptocurrencies easily on
             krypto.
           </p>
+          {!currentAccount &&( 
           <button
             className="flex flex-row justify-center items-center my-5 bg-[#2952e3] p-3 rounded-full cursor-pointer hover:bg-[#2546bd]"
             type="button"
@@ -45,7 +46,7 @@ const Welcome = () => {
           >
             <p className="text-white text-base font-semibold">Connect Wallet</p>
           </button>
-
+)}
           <div className="grid sm:grid-cols-3 grid-cols-2 w-full mt-10">
             <div className={`rounded-tl-2xl ${commonStyles}`}>Binance</div>
             <div className={commonStyles}>CoinMarketCap</div>
