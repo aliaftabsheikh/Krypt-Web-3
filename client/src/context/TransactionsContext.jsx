@@ -15,13 +15,8 @@ const getEthereumContract = () => {
     contractABI,
     signer
   );
-
-  console.log({
-    provider,
-    signer,
-    transactionContract,
-  });
-};
+    return transactionContract;
+}
 
 export const TransactionProvider = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState("");
@@ -70,6 +65,19 @@ export const TransactionProvider = ({ children }) => {
   const sendTransaction = async () => {
     try {
       if (!ethereum) return alert("Please install Metamask");
+      const {addressTo, amount, keyword, message} = formData;
+      const transactionContract = getEthereumContract();
+
+        await ethereum.request({
+            method: 'eth_sendTransaction',
+            params: [{
+                from: currentAccount,
+                to: addressTo,
+                gas: '0x5208',
+                value : amount
+            }] 
+        })
+
     } catch (error) {
       console.log(error);
       throw new Error("No ethereum Object.");
