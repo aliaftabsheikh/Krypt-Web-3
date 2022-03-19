@@ -21,6 +21,7 @@ const getEthereumContract = () => {
 export const TransactionProvider = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [transactions, setTransactions] = useState([])
   const [transactionCount, setTransactionCount] = useState(
     localStorage.getItem("transactionCount")
   );
@@ -35,12 +36,24 @@ export const TransactionProvider = ({ children }) => {
     setFormData((prevState) => ({ ...prevState, [name]: e.target.value }));
   };
 
-  const getAllTransactions = async ()=>{
+  const getAllTransactions = async  ()=>{
     try {
       if (!ethereum) return alert("Please install Metamask");
       const transactionContract = getEthereumContract();
       const availableTransactions = await transactionContract.getAllTransactions(); 
-      console.log(availableTransactions);
+
+      const structureTransactions = availableTransactions.map((transaction)=>({
+        addressTo: transaction.receiver,
+        addressFrom : transaction.sender,
+        timestamp : new Date(transaction.timestamp.toNumber() * 1000).toLocaleString(),
+        message : transaction.message,
+        keyword : transaction.keyword,
+        amount : parseInt(transaction.amount._hex) / (10 ** 18)
+      }))
+
+      console.log(structureTransactions);
+      setTransactions(structureTransactions)
+
     } catch (error) {
       console.log(error);
     }
