@@ -20,8 +20,10 @@ const getEthereumContract = () => {
 
 export const TransactionProvider = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState("");
-  const [isLoading, setIsLoading] = useState(false)
-  const [transactionCount, setTransactionCount] = useState(localStorage.getItem('transactionCount'))
+  const [isLoading, setIsLoading] = useState(false);
+  const [transactionCount, setTransactionCount] = useState(
+    localStorage.getItem("transactionCount")
+  );
   const [formData, setFormData] = useState({
     addressTo: "",
     amount: "",
@@ -45,6 +47,17 @@ export const TransactionProvider = ({ children }) => {
       } else {
         console.log("No Account Found");
       }
+    } catch (error) {
+      console.log(error);
+      throw new Error("No ethereum Object.");
+    }
+  };
+
+  const checkIfTransactionExists = async () => {
+    try {
+      const transactionContract = getEthereumContract();
+      const transactionCount = await transactionContract.getTransactionCount();
+      window.localStorage.setItem("transactionCount", transactionCount);
     } catch (error) {
       console.log(error);
       throw new Error("No ethereum Object.");
@@ -90,17 +103,15 @@ export const TransactionProvider = ({ children }) => {
         keyword
       );
 
-      setIsLoading(true)
+      setIsLoading(true);
       console.log(`Loading - ${transactionHash.hash}`);
       await transactionHash.wait();
 
-      setIsLoading(false)
+      setIsLoading(false);
       console.log(`Success - ${transactionHash.hash}`);
 
       const transactionCount = await transactionContract.getTransactionCount();
-      setTransactionCount(transactionCount.toNumber())
-
-
+      setTransactionCount(transactionCount.toNumber());
     } catch (error) {
       console.log(error);
       throw new Error("No ethereum Object.");
