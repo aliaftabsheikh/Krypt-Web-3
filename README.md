@@ -32,12 +32,10 @@
 - React js
 - Solidity
 - Giphy
-- Netlify
 
 ## How we Learn
 
 - React Functional components and their reusability
 - React file and folder structure
 - Fundamental of Tailwind css classes and its uses.
-- Fundamentals of the CSS BEM Model
 - Solidity for send Ethereum and record in Transactions 
