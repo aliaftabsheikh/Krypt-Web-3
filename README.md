@@ -12,7 +12,7 @@
 
 
 
-## Mobile Responsive
+## Mobile Responsive Images
 
 <img src='./client/src/images/M-1.png'/>
 <img src='./client/src/images/M-2.png'/>
